@@ -74,6 +74,7 @@ src/
 │   ├── UserManagement.jsx
 │   ├── RoleManagement.jsx
 │   ├── PermissionManagement.jsx
+│   ├── MainLayout.jsx
 │   └── Navbar.jsx
 ├── pages/
 │   ├── Dashboard.jsx
