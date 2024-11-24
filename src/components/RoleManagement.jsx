@@ -15,13 +15,11 @@ const RoleManagement = () => {
   const [selectedRole, setSelectedRole] = useState(null);
   const [formValues, setFormValues] = useState({ name: "", description: "" });
 
-  // Handle opening the add modal
   const handleAddRole = () => {
     setFormValues({ name: "", description: "" });
     setIsAddModalOpen(true);
   };
 
-  // Save new role
   const handleSaveNewRole = () => {
     const newRole = {
       id: roles.length + 1,
@@ -32,14 +30,12 @@ const RoleManagement = () => {
     setFormValues({ name: "", description: "" });
   };
 
-  // Handle opening the edit modal
   const handleEditRole = (role) => {
     setSelectedRole(role);
     setFormValues(role);
     setIsEditModalOpen(true);
   };
 
-  // Save edited role
   const handleSaveRole = () => {
     const updatedRoles = roles.map((role) =>
       role.id === selectedRole.id ? { ...role, ...formValues } : role
@@ -50,13 +46,11 @@ const RoleManagement = () => {
     setFormValues({ name: "", description: "" });
   };
 
-  // Handle opening the delete confirmation modal
   const handleDeleteRole = (role) => {
     setSelectedRole(role);
     setIsDeleteModalOpen(true);
   };
 
-  // Confirm deletion
   const confirmDeleteRole = () => {
     const updatedRoles = roles.filter((role) => role.id !== selectedRole.id);
     setRoles(updatedRoles);
@@ -64,50 +58,65 @@ const RoleManagement = () => {
     setSelectedRole(null);
   };
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
   return (
-    <div>
-      <div className="flex justify-end mb-4">
-        <Button type="primary" onClick={handleAddRole}>
+    <div className="p-4">
+      <div className="flex justify-end sm:justify-start mb-4">
+        <Button
+          type="primary"
+          className="w-full sm:w-auto"
+          onClick={handleAddRole}
+        >
           Add Role
         </Button>
       </div>
-      <table className="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-4 py-2">Role Name</th>
-            <th className="border border-gray-300 px-4 py-2">Description</th>
-            <th className="border border-gray-300 px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {roles.map((role) => (
-            <tr key={role.id}>
-              <td className="border border-gray-300 px-4 py-2">{role.name}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                {role.description}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                <Button
-                  type="primary"
-                  onClick={() => handleEditRole(role)}
-                  className="mr-2"
-                >
-                  Edit
-                </Button>
-                <Button danger onClick={() => handleDeleteRole(role)}>
-                  Delete
-                </Button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full border-collapse border border-gray-300">
+          <thead>
+            <tr>
+              <th className="border border-gray-300 px-4 py-2 text-sm sm:text-base">
+                Role Name
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-sm sm:text-base">
+                Description
+              </th>
+              <th className="border border-gray-300 px-4 py-2 text-sm sm:text-base">
+                Actions
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {roles.map((role) => (
+              <tr key={role.id}>
+                <td className="border border-gray-300 px-4 py-2 text-sm sm:text-base">
+                  {role.name}
+                </td>
+                <td className="border border-gray-300 px-4 py-2 text-sm sm:text-base">
+                  {role.description}
+                </td>
+                <td className="border border-gray-300 px-4 py-2 text-sm sm:text-base">
+                  <div className="flex flex-col sm:flex-row sm:space-x-2">
+                    <Button
+                      type="primary"
+                      onClick={() => handleEditRole(role)}
+                      className="mb-2 sm:mb-0"
+                    >
+                      Edit
+                    </Button>
+                    <Button danger onClick={() => handleDeleteRole(role)}>
+                      Delete
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Add Role Modal */}
       <Modal
